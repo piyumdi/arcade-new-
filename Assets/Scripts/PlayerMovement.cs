@@ -131,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
         mainCamera.transform.LookAt(lookAtPosition);
     }
 
+    /*
     void HandleJoystickMovement()
     {
         // Use the joystick's Horizontal and Vertical values to move the player
@@ -159,6 +160,47 @@ public class PlayerMovement : MonoBehaviour
 
         // Check if carrying a stack from the FoodStackManager (if relevant)
         animator.SetBool("IsCarryingStack", foodStackManager.IsCarryingStack());
+    }
+    */
+
+    void HandleJoystickMovement()
+    {
+        // Get the joystick's input
+        Vector3 inputDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+
+        // Check if the joystick is moved
+        if (inputDirection.magnitude > 0.1f) // Check if joystick is being moved
+        {
+            // Move the player based on joystick input
+            transform.position += inputDirection.normalized * moveSpeed * Time.deltaTime;
+            transform.forward = inputDirection.normalized; // Face the direction of movement
+
+            // Set speed for animation
+            currentSpeed = inputDirection.magnitude * moveSpeed;
+        }
+        else
+        {
+            // If no movement, set the speed to 0
+            currentSpeed = 0f;
+        }
+
+        // Update the animation with the current speed
+        animator.SetFloat("Speed", currentSpeed);
+
+        // Check if carrying a stack from the FoodStackManager
+        bool isCarryingStack = foodStackManager.IsCarryingStack();
+        animator.SetBool("IsCarryingStack", isCarryingStack);
+
+        // If not moving, ensure the player goes to idle or carrying state
+        if (currentSpeed == 0f)
+        {
+            // Player should be idle if not carrying anything
+            if (!isCarryingStack)
+            {
+                animator.SetFloat("Speed", 0f); // Trigger idle
+            }
+            // If carrying stack and not moving, it should go to 'Carrying' state
+        }
     }
 
 
