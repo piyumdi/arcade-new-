@@ -111,12 +111,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /*void HandleCameraFollow()
-    {
-        Vector3 targetCameraPosition = transform.position + transform.rotation * cameraOffset;
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetCameraPosition, cameraFollowSpeed * Time.deltaTime);
-        mainCamera.transform.LookAt(transform.position + transform.forward * 2f);
-    }*/
+    
 
     void HandleCameraFollow()
     {
@@ -131,37 +126,7 @@ public class PlayerMovement : MonoBehaviour
         mainCamera.transform.LookAt(lookAtPosition);
     }
 
-    /*
-    void HandleJoystickMovement()
-    {
-        // Use the joystick's Horizontal and Vertical values to move the player
-        Vector3 inputDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
-
-        Debug.Log("Joystick Input: " + inputDirection); // Check joystick input
-
-
-        if (inputDirection.magnitude > 0.1f) // Check if joystick is being moved
-        {
-            // Move the player based on joystick input
-            transform.position += inputDirection.normalized * moveSpeed * Time.deltaTime;
-            transform.forward = inputDirection.normalized; // Face the direction of movement
-
-            // Set speed for animation
-            currentSpeed = inputDirection.magnitude * moveSpeed;
-        }
-        else
-        {
-            // If no movement, set the speed to 0
-            currentSpeed = 0f;
-        }
-
-        // Update the animation with the current speed
-        animator.SetFloat("Speed", currentSpeed);
-
-        // Check if carrying a stack from the FoodStackManager (if relevant)
-        animator.SetBool("IsCarryingStack", foodStackManager.IsCarryingStack());
-    }
-    */
+   
 
     void HandleJoystickMovement()
     {
@@ -226,6 +191,14 @@ public class PlayerMovement : MonoBehaviour
         else if (other.CompareTag("SushiRestaurant"))
         {
             foodStackManager.CollectFood("SushiRestaurant");
+        }
+        else if (other.CompareTag("Bakery"))
+        {
+            foodStackManager.CollectFood("Bakery");
+        }
+        else if (other.CompareTag("FastFood"))
+        {
+            foodStackManager.CollectFood("FastFood");
         }
 
         if (other.CompareTag("Building"))

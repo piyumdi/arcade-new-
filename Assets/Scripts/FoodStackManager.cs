@@ -9,6 +9,8 @@ public class FoodStackManager : MonoBehaviour
     public GameObject pizzaPrefab;
     public GameObject friedChickenPrefab;
     public GameObject sushiPrefab;
+    public GameObject hamburgerPrefab;
+    public GameObject donutPrefab;
     public Transform stackPoint;
     public int maxStackSize = 20;
 
@@ -16,7 +18,7 @@ public class FoodStackManager : MonoBehaviour
     private bool hasCollectedFood = false;
     private float foodPrefabHeight;
 
-    private enum FoodType { None, Pizza, FriedChicken, Sushi };
+    private enum FoodType { None, Pizza, FriedChicken, Sushi,Hamburger,Donut };
     private FoodType currentFoodType = FoodType.None;
 
     public TextMeshProUGUI dollarText;  // TextMeshPro field for the dollar count
@@ -64,6 +66,14 @@ public class FoodStackManager : MonoBehaviour
                 case "SushiRestaurant":
                     foodPrefab = sushiPrefab;
                     currentFoodType = FoodType.Sushi;
+                    break;
+                case "Bakery":
+                    foodPrefab = hamburgerPrefab;
+                    currentFoodType = FoodType.Hamburger;
+                    break;
+                case "FastFood":
+                    foodPrefab = donutPrefab;
+                    currentFoodType = FoodType.Donut;
                     break;
                 default:
                     Debug.LogWarning("Unknown restaurant tag: " + restaurantTag);
